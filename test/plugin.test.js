@@ -15,7 +15,7 @@ test("strips out scss when used as a plugin", () => {
         pattern: /\.scss$/,
       }).visitProgram(m),
   });
-  expect(code).toBe(`import React from "react";
+  expect(code).toBe(`import React from 'react';
 ;
 `);
 });
