@@ -1,5 +1,7 @@
-import { EmptyStatement, ModuleItem } from "@swc/core";
-import Visitor from "@swc/core/Visitor";
+import {
+  EmptyStatement, ModuleItem
+} from '@swc/core';
+import Visitor from '@swc/core/Visitor';
 
 export interface Opts {
   /**
@@ -10,12 +12,12 @@ export interface Opts {
 
 export function createEmptyStatement(): EmptyStatement {
   return {
-    type: "EmptyStatement",
+    type: 'EmptyStatement',
     span: {
       start: 0,
       end: 0,
-      ctxt: 0,
-    },
+      ctxt: 0
+    }
   };
 }
 
@@ -24,8 +26,8 @@ export function visitModuleItems(
   pattern: RegExp
 ): ModuleItem[] {
   return n.map((item) => {
-      console.log(item);
-    if (item.type == "ImportDeclaration" && pattern.test(item.source.value)) {
+    console.log(item);
+    if (item.type === 'ImportDeclaration' && pattern.test(item.source.value)) {
       return createEmptyStatement();
     }
 
