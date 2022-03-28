@@ -1,0 +1,47 @@
+{
+  "name": "swc-plugin-ignore-import",
+  "version": "0.1.0",
+  "description": "SWC plugin to ignore and remove certain imports based on configuration",
+  "author": {
+    "name": "Juga Paazmaya",
+    "email": "paazmaya@yahoo.com",
+    "url": "https://paazmaya.fi"
+  },
+  "homepage": "https://github.com/paazmaya/swc-plugin-ignore-import",
+  "main": "lib/index.js",
+  "keywords": [
+    "swc",
+    "plugin",
+    "import"
+  ],
+  "repository": {
+    "type": "git",
+    "url": "git@github.com:paazmaya/swc-plugin-ignore-import.git"
+  },
+  "bugs": {
+    "url": "https://github.com/paazmaya/swc-plugin-ignore-import/issues"
+  },
+  "engines": {
+    "node": ">=16.13.0",
+    "npm": ">=8.1.0"
+  },
+  "files": [
+    "lib"
+  ],
+  "scripts": {
+    "prepare": "tsc",
+    "pretest": "tsc",
+    "test": "jest --logHeapUsage --verbose"
+  },
+  "devDependencies": {
+    "@swc/jest": "0.2.20",
+    "@tsconfig/node16": "1.0.2",
+    "@types/node": "17.0.23",
+    "jest": "27.5.1",
+    "typescript": "4.6.3"
+  },
+  "peerDependencies": {
+    "@swc/core": "^1.2.136"
+  },
+  "license": "MIT"
+}
