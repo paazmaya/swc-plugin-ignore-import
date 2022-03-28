@@ -13,6 +13,7 @@ jobs:
       uses: actions/setup-node@v3
       with:
         node-version: '16.x'
-    - run: npm ci
+    #- run: npm ci # Requires npm-shrinkwrap.json
+    - run: npm install
     - run: npm run lint
     - run: npm test
