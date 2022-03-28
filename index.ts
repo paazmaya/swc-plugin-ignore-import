@@ -29,10 +29,6 @@ export function visitModuleItems(
       return createEmptyStatement();
     }
 
-    // messages.yaml --> messages
-    if (item.type == "ImportDeclaration" && /messages\.yaml/.test(item.source.value)) {
-        item.source.value.replace(/\.yaml/, '');
-    }
     return item;
   });
 }

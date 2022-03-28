@@ -27,3 +27,13 @@ const { code } = swc.transformSync(src, {
 ```sh
 npx prettier --write index.ts
 ```
+
+## Version history
+
+[Changes happening across different versions and upcoming changes are tracked in the `CHANGELOG.md` file.](CHANGELOG.md)
+
+## License
+
+Licensed under [the MIT license](LICENSE).
+
+Copyright (c) [Juga Paazmaya](https://paazmaya.fi) <paazmaya@yahoo.com>
