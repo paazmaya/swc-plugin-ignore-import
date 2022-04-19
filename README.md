@@ -1,6 +1,7 @@
 # SWC plugin to ignore and remove certain imports based on configuration
 
 [![Node.js v16 CI](https://github.com/paazmaya/swc-plugin-ignore-import/actions/workflows/linting-and-unit-testing.yml/badge.svg)](https://github.com/paazmaya/swc-plugin-ignore-import/actions/workflows/linting-and-unit-testing.yml)
+[![Code Smells](https://sonarcloud.io/api/project_badges/measure?project=paazmaya_swc-plugin-ignore-import&metric=code_smells)](https://sonarcloud.io/summary/new_code?id=paazmaya_swc-plugin-ignore-import)
 
 Inspired from https://www.npmjs.com/package/babel-plugin-ignore-import and since I needed this functionality, as it was blocker was moving to SWC.
 
