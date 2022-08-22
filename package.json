@@ -38,7 +38,7 @@
     "test": "jest --logHeapUsage --verbose"
   },
   "devDependencies": {
-    "@swc/core": "1.2.207",
+    "@swc/core": "1.2.241",
     "@swc/jest": "0.2.22",
     "@tsconfig/node16": "1.0.3",
     "@types/node": "17.0.31",
