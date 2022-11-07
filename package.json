@@ -39,7 +39,7 @@
   },
   "devDependencies": {
     "@swc/core": "1.2.241",
-    "@swc/jest": "0.2.22",
+    "@swc/jest": "0.2.23",
     "@tsconfig/node16": "1.0.3",
     "@types/node": "17.0.31",
     "@typescript-eslint/eslint-plugin": "5.42.1",
