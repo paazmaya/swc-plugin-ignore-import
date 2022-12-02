@@ -19,7 +19,7 @@ describe('PluginIgnoreImport', () => {
           pattern: /\.scss$/
         }).visitProgram(m)
     });
-    expect(code).toBe(`import React from 'react';
+    expect(code).toBe(`import React from "react";
 ;
 `);
   });
