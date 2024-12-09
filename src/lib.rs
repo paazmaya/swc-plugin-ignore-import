@@ -145,3 +145,63 @@ test_inline!(
     // Expected output
     r#"import "keep-this";"#
 );
+
+test_inline!(
+    Default::default(),
+    |_| visit_mut_pass(TransformVisitor::new(
+        Regex::new("ignore-me").unwrap()
+    )),
+    remove_ignore_me_imports,
+    // Input code
+    r#"import "ignore-me"; import "keep-this";"#,
+    // Expected output
+    r#"import "keep-this";"#
+);
+
+test_inline!(
+    Default::default(),
+    |_| visit_mut_pass(TransformVisitor::new(
+        Regex::new("ignore-.*").unwrap()
+    )),
+    remove_ignore_wildcard_imports,
+    // Input code
+    r#"import "ignore-this"; import "ignore-that"; import "keep-this";"#,
+    // Expected output
+    r#"import "keep-this";"#
+);
+
+test_inline!(
+    Default::default(),
+    |_| visit_mut_pass(TransformVisitor::new(
+        Regex::new("ignore-this|ignore-that").unwrap()
+    )),
+    remove_multiple_patterns_imports,
+    // Input code
+    r#"import "ignore-this"; import "ignore-that"; import "keep-this";"#,
+    // Expected output
+    r#"import "keep-this";"#
+);
+
+test_inline!(
+    Default::default(),
+    |_| visit_mut_pass(TransformVisitor::new(
+        Regex::new("^ignore$").unwrap()
+    )),
+    remove_exact_ignore_imports,
+    // Input code
+    r#"import "ignore"; import "keep-this";"#,
+    // Expected output
+    r#"import "keep-this";"#
+);
+
+test_inline!(
+    Default::default(),
+    |_| visit_mut_pass(TransformVisitor::new(
+        Regex::new("ignore").unwrap()
+    )),
+    remove_substring_ignore_imports,
+    // Input code
+    r#"import "ignore"; import "ignore-this"; import "keep-this";"#,
+    // Expected output
+    r#"import "keep-this";"#
+);

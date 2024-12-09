@@ -21,4 +21,11 @@ jobs:
     - name: Test
       run: |
         cargo test
-        cargo tarpaulin --verbose
+        cargo tarpaulin --verbose --out Xml
+
+    - name: Upload coverage to Codecov
+      uses: codecov/codecov-action@v5
+      with:
+        token: ${{ secrets.CODECOV_TOKEN }}
+        fail_ci_if_error: true
+        files: ./target/tarpaulin/coverage.xml
