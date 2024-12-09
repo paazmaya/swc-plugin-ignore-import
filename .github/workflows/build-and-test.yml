@@ -13,9 +13,12 @@ jobs:
     - name: Setup Rust tools
       run: |
         rustup target add wasm32-wasip1
+        cargo install cargo-tarpaulin
 
     - name: Build
       run: cargo build-wasi --release
 
     - name: Test
-      run: cargo test
+      run: |
+        cargo test
+        cargo tarpaulin --verbose
