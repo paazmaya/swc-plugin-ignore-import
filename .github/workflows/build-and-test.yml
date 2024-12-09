@@ -14,14 +14,15 @@ jobs:
       run: |
         rustup target add wasm32-wasip1
         cargo install cargo-tarpaulin
+        cargo install cargo2junit
 
     - name: Build
       run: cargo build-wasi --release
 
     - name: Test
       run: |
-        cargo test
-        cargo tarpaulin --verbose --out Xml
+        RUSTC_BOOTSTRAP=1 cargo test -- -Z unstable-options --format json --report-time | cargo2junit > junit.xml
+        cargo tarpaulin --skip-clean --out xml
 
     - name: Upload coverage to Codecov
       uses: codecov/codecov-action@v5
@@ -29,3 +30,9 @@ jobs:
         token: ${{ secrets.CODECOV_TOKEN }}
         fail_ci_if_error: true
         files: ./target/tarpaulin/coverage.xml
+
+    - name: Upload test results to Codecov
+      if: ${{ !cancelled() }}
+      uses: codecov/test-results-action@v1
+      with:
+        token: ${{ secrets.CODECOV_TOKEN }}

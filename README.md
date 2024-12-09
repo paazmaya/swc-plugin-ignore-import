@@ -4,7 +4,7 @@
 [![Code Smells](https://sonarcloud.io/api/project_badges/measure?project=paazmaya_swc-plugin-ignore-import&metric=code_smells)](https://sonarcloud.io/summary/new_code?id=paazmaya_swc-plugin-ignore-import)
 [![codecov](https://codecov.io/gh/paazmaya/swc-plugin-ignore-import/graph/badge.svg?token=T0lMtm9GSf)](https://codecov.io/gh/paazmaya/swc-plugin-ignore-import)
 
-Inspired from https://www.npmjs.com/package/babel-plugin-ignore-import and since I needed this functionality, as it was blocker was moving to SWC.
+Inspired by [`babel-plugin-ignore-import`](https://www.npmjs.com/package/babel-plugin-ignore-import), and since I needed this functionality it was a blocker to moving fully utilizing [SWC](https://swc.rs/).
 
 ```js
 const swc = require("@swc/core");
