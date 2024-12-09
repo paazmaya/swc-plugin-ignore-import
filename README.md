@@ -25,10 +25,46 @@ const { code } = swc.transformSync(src, {
 });
 ```
 
+
+```js
+const swc = require("@swc/core");
+const { loadWasmPlugin } = require("@swc/plugin-loader");
+const fs = require("fs");
+const path = require("path");
+
+// Path to the compiled WASM plugin
+const pluginPath = path.resolve(
+  __dirname,
+  "swc_plugin_ignore_import.wasm"
+);
+
+const wasmPlugin = await loadWasmPlugin(fs.readFileSync(pluginPath));
+
+const { code } = swc.transformSync(src, {
+  filename: "source-file-name-for-sourcemap.js",
+  sourceMaps: true,
+  jsc: {
+    parser: {
+      syntax: "ecmascript",
+    },
+    target: "es2015",
+  },
+  plugin: (m) => {
+    // Apply the WASM plugin to the SWC transform
+    return wasmPlugin(m, {
+      pattern: "\\.s?css$", // Plugin-specific options
+    });
+  },
+});
+
+console.log(code);
+
+```
+
 ## Code style
 
 ```sh
-npx prettier --write index.ts
+cargo fmt
 ```
 
 ## Version history

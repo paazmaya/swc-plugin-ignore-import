@@ -5,6 +5,8 @@ It follows the guidance from https://keepachangelog.com/en/1.0.0/.
 
 ## Unreleased
 
+- Converted to WebAssembly from Typescript
+
 ## `v0.1.0` (2022-03-28)
 
 - Just using `ImportDeclaration` to find possible ignored imports

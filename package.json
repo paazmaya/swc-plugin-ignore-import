@@ -1,57 +1,41 @@
 {
-  "name": "swc-plugin-ignore-import",
-  "version": "0.1.0",
-  "description": "SWC plugin to ignore and remove certain imports based on configuration",
-  "author": {
-    "name": "Juga Paazmaya",
-    "email": "paazmaya@yahoo.com",
-    "url": "https://paazmaya.fi"
-  },
-  "homepage": "https://github.com/paazmaya/swc-plugin-ignore-import",
-  "main": "lib/index.js",
-  "type": "module",
-  "keywords": [
-    "swc",
-    "plugin",
-    "import"
-  ],
-  "repository": {
-    "type": "git",
-    "url": "git+ssh://git@github.com/paazmaya/swc-plugin-ignore-import.git"
-  },
-  "bugs": {
-    "url": "https://github.com/paazmaya/swc-plugin-ignore-import/issues"
-  },
-  "engines": {
-    "node": ">=22.11.0",
-    "npm": ">=10.9.0"
-  },
-  "files": [
-    "lib",
-    "package.json",
-    "LICENSE",
-    "README.md"
-  ],
-  "scripts": {
-    "prepare": "tsc",
-    "pretest": "tsc",
-    "lint": "eslint index.ts",
-    "test": "jest --logHeapUsage --verbose"
-  },
-  "devDependencies": {
-    "@swc/core": "1.10.1",
-    "@swc/jest": "0.2.37",
-    "@tsconfig/node16": "16.1.3",
-    "@types/node": "22.10.1",
-    "@typescript-eslint/eslint-plugin": "8.17.0",
-    "@typescript-eslint/parser": "8.17.0",
-    "eslint": "9.16.0",
-    "eslint-config-paazmaya": "9.0.1",
-    "jest": "29.7.0",
-    "typescript": "5.7.2"
-  },
-  "peerDependencies": {
-    "@swc/core": "^1.10.1"
-  },
-  "license": "MIT"
+    "name": "swc-plugin-ignore-import",
+    "version": "0.2.0",
+    "description": "SWC plugin to ignore and remove certain imports based on configuration",
+    "author": {
+      "name": "Juga Paazmaya",
+      "email": "paazmaya@yahoo.com",
+      "url": "https://paazmaya.fi"
+    },
+    "homepage": "https://github.com/paazmaya/swc-plugin-ignore-import",
+    "main": "swc-plugin-ignore-import.wasm",
+    "type": "module",
+    "keywords": [
+      "swc",
+      "plugin",
+      "swc-plugin",
+      "import"
+    ],
+    "repository": {
+      "type": "git",
+      "url": "git+ssh://git@github.com/paazmaya/swc-plugin-ignore-import.git"
+    },
+    "bugs": {
+      "url": "https://github.com/paazmaya/swc-plugin-ignore-import/issues"
+    },
+    "files": [
+      "swc-plugin-ignore-import.wasm",
+      "package.json",
+      "LICENSE",
+      "README.md"
+    ],
+    "peerDependencies": {
+      "@swc/core": "^1.7.0"
+    },
+    "scripts": {
+        "prepublishOnly": "cargo build-wasi --release",
+        "prepack": "cargo build-wasi --release && cp target/wasm32-wasi/release/swc-plugin-ignore-import.wasm ."
+    },
+    "preferUnplugged": true,
+    "license": "MIT"
 }
