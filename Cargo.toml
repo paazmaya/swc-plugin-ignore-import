@@ -21,6 +21,7 @@ strip = "symbols"
 [dependencies]
 regex = "1.11.1"
 serde = "1.0.203"
+serde_json = "1.0.89"
 
 # https://plugins.swc.rs/versions/range/138
 swc_core = { version = "9.0", features = ["ecma_plugin_transform"] }

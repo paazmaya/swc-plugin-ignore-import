@@ -7,59 +7,28 @@
 Inspired by [`babel-plugin-ignore-import`](https://www.npmjs.com/package/babel-plugin-ignore-import), and since I needed this functionality it was a blocker to moving fully utilizing [SWC](https://swc.rs/).
 
 ```js
-const swc = require("@swc/core");
-const PluginIgnoreImport = require("swc-plugin-ignore-import").default;
+import path from "node:path";
+import { transformSync } from "@swc/core";
 
-const { code } = swc.transformSync(src, {
-  filename: "source-file-name-for-sourcemap.js",
-  sourceMaps: true,
+const pluginPath = path.resolve("target/wasm32-wasip1/release/swc_plugin_ignore_import.wasm");
+
+const output = transformSync(input, {
   jsc: {
     parser: {
       syntax: "ecmascript",
     },
-    target: "es2015",
-  },
-  plugin: (m) =>
-    new PluginIgnoreImport({
-      pattern: /\.s?css$/,
-    }).visitProgram(m),
-});
-```
-
-
-```js
-const swc = require("@swc/core");
-const { loadWasmPlugin } = require("@swc/plugin-loader");
-const fs = require("fs");
-const path = require("path");
-
-// Path to the compiled WASM plugin
-const pluginPath = path.resolve(
-  __dirname,
-  "swc_plugin_ignore_import.wasm"
-);
-
-const wasmPlugin = await loadWasmPlugin(fs.readFileSync(pluginPath));
-
-const { code } = swc.transformSync(src, {
-  filename: "source-file-name-for-sourcemap.js",
-  sourceMaps: true,
-  jsc: {
-    parser: {
-      syntax: "ecmascript",
+    experimental: {
+      plugins: [
+        [
+          pluginPath,
+          {
+            pattern: "some-pattern",
+          }
+        ]
+      ],
     },
-    target: "es2015",
-  },
-  plugin: (m) => {
-    // Apply the WASM plugin to the SWC transform
-    return wasmPlugin(m, {
-      pattern: "\\.s?css$", // Plugin-specific options
-    });
   },
 });
-
-console.log(code);
-
 ```
 
 ## Code style

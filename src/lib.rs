@@ -5,6 +5,7 @@ use swc_core::ecma::{
 };
 use swc_core::plugin::{plugin_transform, proxies::TransformPluginProgramMetadata};
 use regex::Regex;
+use serde_json::Value;
 
 /// A visitor that removes imports matching a specific pattern.
 pub struct TransformVisitor {
@@ -41,10 +42,15 @@ impl VisitMut for TransformVisitor {
 #[plugin_transform]
 pub fn process_transform(
     mut program: Program,
-    _metadata: TransformPluginProgramMetadata,
+    metadata: TransformPluginProgramMetadata,
 ) -> Program {
-    // Extract pattern from metadata (replace this with real extraction logic if needed)
-    let pattern = Regex::new("some-pattern").unwrap();
+    // Get the options passed for the plugin as a JSON string
+    let options_str = metadata.get_transform_plugin_config().expect("Failed to get plugin config");
+    let options: Value = serde_json::from_str(&options_str).expect("Failed to parse options JSON");
+    
+    let pattern_str = options.get("pattern").expect("Pattern not found in options").as_str().expect("Pattern is not a string");
+    let pattern = Regex::new(pattern_str).expect("Invalid regex pattern");
+    
     program.visit_mut_with(&mut TransformVisitor::new(pattern));
     program
 }
@@ -53,11 +59,11 @@ pub fn process_transform(
 test_inline!(
     Default::default(),
     |_| visit_mut_pass(TransformVisitor::new(
-        Regex::new("some-pattern").unwrap()
+        Regex::new("some.+name").unwrap()
     )),
     remove_matching_imports,
     // Input code
-    r#"import "some-pattern"; import "keep-this";"#,
+    r#"import "some-module-name"; import "keep-this";"#,
     // Expected output
     r#"import "keep-this";"#
 );

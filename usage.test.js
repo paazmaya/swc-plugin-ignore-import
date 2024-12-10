@@ -1,43 +1,106 @@
-import assert from "node:assert";
-import test from "node:test";
 import path from "node:path";
+import { describe, it } from "node:test";
+import assert from "node:assert";
 
 import { transformSync } from "@swc/core";
 
-// Example code to be transformed
-const code = `
-import "some-pattern";
+const pluginPath = path.resolve("target/wasm32-wasip1/debug/swc_plugin_ignore_import.wasm");
+
+describe('SWC Plugin Ignore Import', () => {
+  it('should remove specified imports', () => {
+    const input = `
+import "@exact/package-name";
 import "keep-this";
-console.log("Hello, world!");
 `;
 
-// Transform the code using SWC with the Wasm plugin
-const output = transformSync(code, {
-  jsc: {
-    parser: {
-      syntax: "ecmascript",
-    },
-    experimental: {
-      plugins: [
-        [
-          path.resolve("target/wasm32-wasip1/release/swc_plugin_ignore_import.wasm"),
-          {
-            pattern: "some-pattern",
-          }
-        ]
-      ],
-    },
-  },
-});
-
-console.log(output.code);
-
-// Node.js test runner test case
-test('SWC plugin should remove specified imports', () => {
-  const expectedOutput = `
+    const output = transformSync(input, {
+      jsc: {
+        parser: {
+          syntax: "ecmascript",
+        },
+        experimental: {
+          plugins: [
+            [
+              pluginPath,
+              {
+                pattern: "@exact/package-name",
+              }
+            ]
+          ],
+        },
+      },
+    });
+    const expected = `
 import "keep-this";
-console.log("Hello, world!");
-  `.trim();
+    `.trim();
 
-  assert.strictEqual(output.code.trim(), expectedOutput);
+    assert.strictEqual(output.code.trim(), expected);
+  });
+
+  it('should remove .scss imports', () => {
+const input = `
+import "styles.scss";
+import "keep-this";
+`;
+
+    const output = transformSync(input, {
+      jsc: {
+        parser: {
+          syntax: "ecmascript",
+        },
+        experimental: {
+          plugins: [
+            [
+              pluginPath,
+              {
+                pattern: ".scss$",
+              }
+            ]
+          ],
+        },
+      },
+    });
+    const expected = `
+import "keep-this";
+    `.trim();
+
+    assert.strictEqual(output.code.trim(), expected);
+  });
+
+  it('should remove same word starting imports', () => {
+const input = `
+import "jquery"; // Still needed
+import "react";
+import "react-dom";
+import "other-router";
+import "react-router";
+import "react-router-dom";
+import "keep-this";
+`;
+
+    const output = transformSync(input, {
+      jsc: {
+        parser: {
+          syntax: "ecmascript",
+        },
+        experimental: {
+          plugins: [
+            [
+              pluginPath,
+              {
+                pattern: "^react",
+              }
+            ]
+          ],
+        },
+      },
+    });
+    const expected = `
+import "jquery"; // Still needed
+import "other-router";
+import "keep-this";
+    `.trim();
+
+    assert.strictEqual(output.code.trim(), expected);
+  });
 });
