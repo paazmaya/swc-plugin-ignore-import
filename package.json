@@ -8,7 +8,7 @@
       "url": "https://paazmaya.fi"
     },
     "homepage": "https://github.com/paazmaya/swc-plugin-ignore-import",
-    "main": "swc-plugin-ignore-import.wasm",
+    "main": "swc_plugin_ignore_import.wasm",
     "type": "module",
     "keywords": [
       "swc",
@@ -36,8 +36,7 @@
       "@swc/core": "1.10.1"
     },
     "scripts": {
-        "prepublishOnly": "cargo build-wasi --release",
-        "prepack": "cargo build-wasi --release && cp target/wasm32-wasip1/release/swc_plugin_ignore_import.wasm .",
+        "prepublishOnly": "cargo build-wasi --release && cp target/wasm32-wasip1/release/swc_plugin_ignore_import.wasm .",
         "test": "node --test"
     },
     "preferUnplugged": true,

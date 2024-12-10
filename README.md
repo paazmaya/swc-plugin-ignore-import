@@ -7,22 +7,16 @@
 Inspired by [`babel-plugin-ignore-import`](https://www.npmjs.com/package/babel-plugin-ignore-import), and since I needed this functionality it was a blocker to moving fully utilizing [SWC](https://swc.rs/).
 
 ```js
-import path from "node:path";
 import { transformSync } from "@swc/core";
-
-const pluginPath = path.resolve("target/wasm32-wasip1/release/swc_plugin_ignore_import.wasm");
 
 const output = transformSync(input, {
   jsc: {
-    parser: {
-      syntax: "ecmascript",
-    },
     experimental: {
       plugins: [
         [
-          pluginPath,
+          "swc-plugin-ignore-import",
           {
-            pattern: "some-pattern",
+            pattern: ".scss$",
           }
         ]
       ],
