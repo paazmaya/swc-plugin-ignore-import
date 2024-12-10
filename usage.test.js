@@ -15,9 +15,6 @@ import "keep-this";
 
     const output = transformSync(input, {
       jsc: {
-        parser: {
-          syntax: "ecmascript",
-        },
         experimental: {
           plugins: [
             [
@@ -45,9 +42,6 @@ import "keep-this";
 
     const output = transformSync(input, {
       jsc: {
-        parser: {
-          syntax: "ecmascript",
-        },
         experimental: {
           plugins: [
             [
@@ -80,9 +74,6 @@ import "keep-this";
 
     const output = transformSync(input, {
       jsc: {
-        parser: {
-          syntax: "ecmascript",
-        },
         experimental: {
           plugins: [
             [
