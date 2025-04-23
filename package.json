@@ -33,7 +33,7 @@
         "@swc/core": "^1.7.0"
     },
     "devDependencies": {
-        "@swc/core": "1.11.21"
+        "@swc/core": "1.11.22"
     },
     "scripts": {
         "prepublishOnly": "cargo build-wasi --release && cp target/wasm32-wasip1/release/swc_plugin_ignore_import.wasm .",
