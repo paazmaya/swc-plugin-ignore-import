@@ -31,6 +31,24 @@ const output = transformSync(input, {
 cargo fmt
 ```
 
+## Testing
+
+First make sure that the correct Wasm target for Rust compiler is being installed:
+
+```sh
+rustup target add wasm32-wasip1
+```
+
+Node.js usage tests are written in `usage.test.js` and can be executed:
+
+```sh
+cargo build-wasi
+npm install
+npm test
+```
+
+The same approach is used at GitHub Actions, defined in `.github/workflows/build-and-test.yml`.
+
 ## Version history
 
 [Changes happening across different versions and upcoming changes are tracked in the `CHANGELOG.md` file.](CHANGELOG.md)
