@@ -30,13 +30,14 @@
         "README.md"
     ],
     "peerDependencies": {
-        "@swc/core": "^1.7.0"
+        "@swc/core": "^1.12.0"
     },
     "devDependencies": {
-        "@swc/core": "1.12.0"
+        "@swc/core": "1.12.1"
     },
     "scripts": {
-        "prepublishOnly": "cargo build-wasi --release && cp target/wasm32-wasip1/release/swc_plugin_ignore_import.wasm .",
+        "build": "cargo build-wasi --release",
+        "prepublishOnly": "npm run build && cp target/wasm32-wasip1/release/swc_plugin_ignore_import.wasm .",
         "test": "node --test"
     },
     "preferUnplugged": true,

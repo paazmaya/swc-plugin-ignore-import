@@ -261,6 +261,8 @@ test_inline!(
 #[cfg(test)]
 mod tests {
     use super::*;
+    use swc_core::common::DUMMY_SP;
+    use swc_core::ecma::ast::{ImportDecl, Lit, Module, ModuleDecl, ModuleItem, Str};
 
     #[test]
     fn test_parse_options_valid_pattern() {
@@ -296,5 +298,117 @@ mod tests {
     fn test_parse_options_invalid_regex() {
         let options_str = r#"{"pattern": "["}"#; // Invalid regex
         parse_options(options_str);
+    }
+
+    #[test]
+    fn test_transform_visitor_new() {
+        let pattern = Regex::new("test-pattern").unwrap();
+        let visitor = TransformVisitor::new(pattern);
+        assert!(visitor.pattern.is_match("test-pattern"));
+        assert!(!visitor.pattern.is_match("other-pattern"));
+    }
+
+    #[test]
+    fn test_visit_mut_module_items_removes_matching_imports() {
+        let pattern = Regex::new("remove-me").unwrap();
+        let mut visitor = TransformVisitor::new(pattern);
+
+        // Create a module with two imports - one that should be removed and one that should be kept
+        let mut items = vec![
+            create_import_module_item("remove-me"),
+            create_import_module_item("keep-this"),
+        ];
+
+        // Apply the visitor
+        visitor.visit_mut_module_items(&mut items);
+
+        // We should only have one item left
+        assert_eq!(items.len(), 1);
+        
+        // Check that the remaining import is the one we wanted to keep
+        if let ModuleItem::ModuleDecl(ModuleDecl::Import(import_decl)) = &items[0] {
+            assert_eq!(import_decl.src.value.to_string(), "keep-this");
+        } else {
+            panic!("Expected an import declaration");
+        }
+    }
+
+    #[test]
+    fn test_visit_mut_module_items_keeps_non_matching_imports() {
+        let pattern = Regex::new("remove-me").unwrap();
+        let mut visitor = TransformVisitor::new(pattern);
+
+        // Create a module with two non-matching imports
+        let mut items = vec![
+            create_import_module_item("keep-this-1"),
+            create_import_module_item("keep-this-2"),
+        ];
+
+        // Original length
+        let original_len = items.len();
+
+        // Apply the visitor
+        visitor.visit_mut_module_items(&mut items);
+
+        // We should still have the same number of items
+        assert_eq!(items.len(), original_len);
+    }    #[test]
+    fn test_visit_mut_module_items_non_import_items() {
+        let pattern = Regex::new("remove-me").unwrap();
+        let mut visitor = TransformVisitor::new(pattern);
+
+        // Create a non-import module item (we'll use an empty export declaration as a placeholder)        // Create a different non-import item to avoid complicated AST structures
+        let non_import_item = ModuleItem::Stmt(swc_core::ecma::ast::Stmt::Empty(swc_core::ecma::ast::EmptyStmt {
+            span: DUMMY_SP,
+        }));
+
+        let mut items = vec![non_import_item];
+
+        // Original length
+        let original_len = items.len();
+
+        // Apply the visitor
+        visitor.visit_mut_module_items(&mut items);
+
+        // Non-import items should not be removed
+        assert_eq!(items.len(), original_len);
+    }    // Helper function to create an import module item
+    fn create_import_module_item(source: &str) -> ModuleItem {
+        ModuleItem::ModuleDecl(ModuleDecl::Import(ImportDecl {
+            span: DUMMY_SP,
+            specifiers: vec![],
+            src: Box::new(Str {
+                span: DUMMY_SP,
+                value: source.into(),
+                raw: None,
+            }),
+            type_only: false,
+            with: None,
+            phase: swc_core::ecma::ast::ImportPhase::Evaluation,
+        }))
+    }    #[test]
+    fn test_direct_transformation_with_visitor() {
+        use swc_core::ecma::ast::{Module, Program};
+        
+        // Create a simple program with an import that should be removed
+        let import_stmt = create_import_module_item("test-pattern");
+        let module = Module {
+            span: DUMMY_SP,
+            body: vec![import_stmt],
+            shebang: None,
+        };
+        
+        let mut program = Program::Module(module);
+        
+        // Apply transformation directly using the visitor
+        let pattern = Regex::new("test-pattern").unwrap();
+        program.visit_mut_with(&mut TransformVisitor::new(pattern));
+        
+        // Verify the import was removed
+        if let Program::Module(result_module) = program {
+            assert_eq!(result_module.body.len(), 0, "Import should have been removed");
+        } else {
+            panic!("Expected a module program");
+        }
     }
 }
