@@ -17,8 +17,8 @@ const output = transformSync(input, {
           "swc-plugin-ignore-import",
           {
             pattern: ".scss$",
-          }
-        ]
+          },
+        ],
       ],
     },
   },
