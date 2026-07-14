@@ -27,7 +27,7 @@ jobs:
       run: cargo build-wasi
     
     - name: Use Node.js v24
-      uses: actions/setup-node@v6
+      uses: actions/setup-node@v7
       with:
         node-version: '24.x'
     
