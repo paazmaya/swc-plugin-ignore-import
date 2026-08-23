@@ -35,7 +35,7 @@ jobs:
       run: npm install
 
     - name: SPDX Dependency Submission Action
-      uses: advanced-security/spdx-dependency-submission-action@v0.2.0
+      uses: advanced-security/spdx-dependency-submission-action@v0.3.2
   
     - name: Test usage with npm
       run: npm test
