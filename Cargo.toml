@@ -1,6 +1,6 @@
 [package]
 name = "swc-plugin-ignore-import"
-version = "0.2.0"
+version = "0.3.0"
 edition = "2021"
 
 [lib]
@@ -19,9 +19,9 @@ opt-level = "s"
 strip = "symbols"
 
 [dependencies]
-regex = "1.11.1"
-serde = "1.0.215"
-serde_json = "1.0.133"
+regex = "1.13.1"
+serde = "1.0.229"
+serde_json = "1.0.151"
 
 # https://plugins.swc.rs/versions/range/138
 swc_core = { version = "70.0.0", features = ["ecma_plugin_transform"] }
