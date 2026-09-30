@@ -16,6 +16,7 @@ jobs:
 
     - name: Setup Rust tools
       run: |
+        rustup default stable
         rustup target add wasm32-wasip1
 
     # https://github.com/cargo-bins/cargo-binstall
