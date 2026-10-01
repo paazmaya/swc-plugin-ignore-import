@@ -33,7 +33,7 @@
         "@swc/core": "^1.16.0"
     },
     "devDependencies": {
-        "@swc/core": "1.16.12"
+        "@swc/core": "1.16.13"
     },
     "scripts": {
         "build": "cargo build-wasi --release",
