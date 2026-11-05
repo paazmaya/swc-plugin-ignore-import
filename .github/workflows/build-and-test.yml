@@ -5,14 +5,20 @@ on: [push]
 concurrency:
   group: ${{ github.workflow }}-${{ github.ref }}
   cancel-in-progress: true
-  
+
+permissions: {}
+
 jobs:
   build:
 
     runs-on: ubuntu-latest
+    permissions:
+      contents: write
 
     steps:
-    - uses: actions/checkout@v7
+    - uses: actions/checkout@3d3c42e5aac5ba805825da76410c181273ba90b1 # v7.0.1
+      with:
+        persist-credentials: false
 
     - name: Setup Rust tools
       run: |
@@ -21,7 +27,7 @@ jobs:
 
     # https://github.com/cargo-bins/cargo-binstall
     - name: Install binary installation tool for cargo
-      uses: cargo-bins/cargo-binstall@main
+      uses: cargo-bins/cargo-binstall@851112458b5f28a29e5bc14a690c3f283d9dcc6f # v1.26.2
 
     # https://github.com/xd009642/tarpaulin
     - name: Install code coverage tool
@@ -32,15 +38,15 @@ jobs:
       run: cargo build-wasi
     
     - name: Use Node.js v24
-      uses: actions/setup-node@v7
+      uses: actions/setup-node@949feb2413d6458794dcd2491c4babbbce0c15c1 # v7.1.0
       with:
         node-version: '24.x'
     
     - name: Install npm dependencies
-      run: npm install
+      run: npm install --ignore-scripts
 
     - name: SPDX Dependency Submission Action
-      uses: advanced-security/spdx-dependency-submission-action@v0.4.0
+      uses: advanced-security/spdx-dependency-submission-action@b009efcf8b9d562a4569d2028c276522232e631f # v0.4.0
   
     - name: Test usage with npm
       run: npm test
@@ -54,7 +60,7 @@ jobs:
         cargo tarpaulin --skip-clean --out xml
 
     - name: Upload coverage to Codecov
-      uses: codecov/codecov-action@v7
+      uses: codecov/codecov-action@303a32d7a59b442fa8d48b6a1cc6825c09c847a5 # v7.1.1
       with:
         token: ${{ secrets.CODECOV_TOKEN }}
         fail_ci_if_error: true
@@ -62,6 +68,6 @@ jobs:
 
     - name: Upload test results to Codecov
       if: ${{ !cancelled() }}
-      uses: codecov/test-results-action@v1
+      uses: codecov/test-results-action@0fa95f0e1eeaafde2c782583b36b28ad0d8c77d3 # v1.2.1
       with:
         token: ${{ secrets.CODECOV_TOKEN }}

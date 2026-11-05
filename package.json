@@ -18,16 +18,16 @@
     ],
     "repository": {
         "type": "git",
-        "url": "git+ssh://git@github.com/paazmaya/swc-plugin-ignore-import.git"
+        "url": "git+https://github.com/paazmaya/swc-plugin-ignore-import.git"
     },
     "bugs": {
         "url": "https://github.com/paazmaya/swc-plugin-ignore-import/issues"
     },
+    "engines": {
+        "node": ">=22.11.0"
+    },
     "files": [
-        "swc_plugin_ignore_import.wasm",
-        "package.json",
-        "LICENSE",
-        "README.md"
+        "swc_plugin_ignore_import.wasm"
     ],
     "peerDependencies": {
         "@swc/core": "^1.16.0"

@@ -2,6 +2,14 @@
 name = "swc-plugin-ignore-import"
 version = "0.3.0"
 edition = "2021"
+description = "SWC plugin to ignore and remove certain imports based on configuration"
+license = "MIT"
+authors = ["Juga Paazmaya <paazmaya@yahoo.com>"]
+homepage = "https://github.com/paazmaya/swc-plugin-ignore-import"
+repository = "https://github.com/paazmaya/swc-plugin-ignore-import"
+keywords = ["swc", "plugin", "swc-plugin", "import", "wasm"]
+categories = ["development-tools", "wasm"]
+include = ["src/**/*", "Cargo.toml", "LICENSE", "README.md", "CHANGELOG.md"]
 
 [lib]
 crate-type = ["cdylib"]
