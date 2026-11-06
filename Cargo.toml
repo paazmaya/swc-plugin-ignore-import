@@ -2,6 +2,7 @@
 name = "swc-plugin-ignore-import"
 version = "0.3.0"
 edition = "2021"
+rust-version = "1.92"
 description = "SWC plugin to ignore and remove certain imports based on configuration"
 license = "MIT"
 authors = ["Juga Paazmaya <paazmaya@yahoo.com>"]

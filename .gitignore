@@ -109,3 +109,4 @@ dist
 target
 .swc
 *.wasm
+.DS_Store
