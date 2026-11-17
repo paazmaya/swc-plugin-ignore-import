@@ -26,7 +26,7 @@ jobs:
       contents: write
 
     steps:
-    - uses: actions/checkout@3d3c42e5aac5ba805825da76410c181273ba90b1 # v7.0.1
+    - uses: chainguard-actions/actions-checkout@37298d8de412b35988dd165ffae45f45b329d365 # v7.0.1
       with:
         persist-credentials: false
 
@@ -48,7 +48,7 @@ jobs:
       run: cargo build-wasi
     
     - name: Use Node.js v24
-      uses: actions/setup-node@949feb2413d6458794dcd2491c4babbbce0c15c1 # v7.1.0
+      uses: chainguard-actions/actions-setup-node@0fc7fd914070e07cca22606e4cab3cfeaf43711d # v7.1.0
       with:
         node-version: '24.x'
     
@@ -70,7 +70,7 @@ jobs:
         cargo tarpaulin --skip-clean --out xml
 
     - name: Upload coverage to Codecov
-      uses: codecov/codecov-action@303a32d7a59b442fa8d48b6a1cc6825c09c847a5 # v7.1.1
+      uses: chainguard-actions/codecov-codecov-action@4e95a2ab133962d45d778e4ce39d1e21e4e536de # v7.1.1
       with:
         token: ${{ secrets.CODECOV_TOKEN }}
         fail_ci_if_error: true
@@ -78,6 +78,6 @@ jobs:
 
     - name: Upload test results to Codecov
       if: ${{ !cancelled() }}
-      uses: codecov/test-results-action@0fa95f0e1eeaafde2c782583b36b28ad0d8c77d3 # v1.2.1
+      uses: chainguard-actions/codecov-test-results-action@c994e899f671b558b62900d077aacf26dd7bea38 # v1.2.1
       with:
         token: ${{ secrets.CODECOV_TOKEN }}
