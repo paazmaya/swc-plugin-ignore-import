@@ -78,6 +78,6 @@ jobs:
 
     - name: Upload test results to Codecov
       if: ${{ !cancelled() }}
-      uses: chainguard-actions/codecov-test-results-action@c994e899f671b558b62900d077aacf26dd7bea38 # v1.2.1
+      uses: chainguard-actions/codecov-test-results-action@27a8c40af44310bb99371313c36f69977141caf1 # v1.2.1
       with:
         token: ${{ secrets.CODECOV_TOKEN }}
